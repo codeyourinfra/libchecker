@@ -18,4 +18,4 @@ RUN apk add --no-cache python3-dev musl-dev gcc && \
 # MONGODB_PASSWORD
 # MONGODB_NAME
 
-CMD ["python3", "./libchecker.py"]
+CMD ["python3", "./main.py"]

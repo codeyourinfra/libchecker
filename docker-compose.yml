@@ -1,0 +1,43 @@
+version: '3'
+services:
+
+  libchecker:
+    image: codeyourinfra/libchecker
+    build: .
+    container_name: libchecker
+    restart: always
+    environment:
+      - LIBRARIESIO_API_KEY
+      - LIBRARIES_PLATFORM=pypi
+      - LIBRARY_NAME=ansible
+      - MONGODB_URI=mongodb://mongo/
+      - MONGODB_USERNAME=dbuser
+      - MONGODB_PASSWORD=dbpassword
+      - MONGODB_NAME=latest
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=dbuser
+      - MONGO_INITDB_ROOT_PASSWORD=dbpassword
+    volumes:
+      - mongo_data:/data/db
+
+  mongodb-ui:
+    image: mongo-express
+    container_name: mongodb-ui
+    restart: always
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=dbuser
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=dbpassword
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:
