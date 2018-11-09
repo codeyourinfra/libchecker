@@ -1,8 +1,18 @@
 #!/usr/bin/python3.6
 
+import logging
 import signal
 import time
 from libchecker import LibraryChecker
+
+
+logger = logging.getLogger("libchecker")
+handler = logging.StreamHandler("ext://sys.stdout")
+formatter = logging.Formatter("%(asctime)s: %(name)s - %(levelname)s - %(message)s")
+handler.setFormatter(formatter)
+handler.setLevel(logging.INFO)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
 
 
 class ServiceExit(Exception):
@@ -14,7 +24,7 @@ class ServiceExit(Exception):
 
 
 def service_shutdown(signum):
-    print('Caught signal %d' % signum)
+    logger.info('Caught signal %d' % signum)
     raise ServiceExit
 
 
@@ -22,7 +32,7 @@ def main():
     signal.signal(signal.SIGTERM, service_shutdown)
     signal.signal(signal.SIGINT, service_shutdown)
 
-    print("Starting main program")
+    logger.info("Starting main program")
     checker = LibraryChecker()
     try:
         while True:
@@ -30,7 +40,7 @@ def main():
             time.sleep(60)
     except ServiceExit:
         pass
-    print("Exiting main program")
+    logger.info("Exiting main program")
 
 
 if __name__ == "__main__":
