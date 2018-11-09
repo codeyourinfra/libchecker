@@ -11,4 +11,4 @@ class LibraryInfoSetter():
 
 
     def set(self, library_info):
-        self.__db["libraries"].replace_one({"_id": library_info["_id"]}, library_info, upsert=True)
+        self.__db["latest"].replace_one({"_id": library_info["_id"]}, library_info, upsert=True)
