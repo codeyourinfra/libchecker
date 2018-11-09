@@ -16,6 +16,7 @@ RUN apk add --no-cache python3-dev musl-dev gcc && \
 # MONGODB_URI
 # MONGODB_USERNAME
 # MONGODB_PASSWORD
-# MONGODB_NAME
+# MONGODB_DBAUTH
+# MONGODB_DBNAME
 
 CMD ["python3", "./main.py"]

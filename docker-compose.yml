@@ -13,7 +13,8 @@ services:
       - MONGODB_URI=mongodb://mongo/
       - MONGODB_USERNAME=dbuser
       - MONGODB_PASSWORD=dbpassword
-      - MONGODB_NAME=libraries
+      - MONGODB_DBAUTH=admin
+      - MONGODB_DBNAME=libraries
     depends_on:
       - mongo
 

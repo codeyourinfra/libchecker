@@ -25,8 +25,9 @@ class LibraryChecker():
         self.__mongodb_uri = os.environ.get("MONGODB_URI")
         self.__dbuser = os.environ.get("MONGODB_USERNAME")
         self.__dbpassword = os.environ.get("MONGODB_PASSWORD")
-        self.__dbname = os.environ.get("MONGODB_NAME")
-        return LibraryInfoSetter(self.__mongodb_uri, self.__dbuser, self.__dbpassword, self.__dbname)
+        self.__dbauth = os.environ.get("MONGODB_DBAUTH")
+        self.__dbname = os.environ.get("MONGODB_DBNAME", self.__dbauth)
+        return LibraryInfoSetter(self.__mongodb_uri, self.__dbuser, self.__dbpassword, self.__dbauth, self.__dbname)
 
 
     def check(self):
