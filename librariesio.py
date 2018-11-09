@@ -1,7 +1,6 @@
 #!/usr/bin/python3.6
 
 import requests
-from requests.exceptions import ConnectionError
 
 
 class LibraryInfoGetter():
@@ -15,6 +14,6 @@ class LibraryInfoGetter():
         try:
             response = requests.get(self.__url)
             library_info = response.content.decode("utf-8") if response.status_code == 200 else ""
-        except ConnectionError:
+        except requests.exceptions.ConnectionError:
             library_info = ""
         return library_info

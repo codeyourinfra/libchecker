@@ -6,8 +6,9 @@ from pymongo import MongoClient
 class LibraryInfoSetter():
 
 
-    def __init__(self, mongodb_uri, dbuser, dbpassword, dbauth, dbname):
-        self.__db = MongoClient(mongodb_uri, username=dbuser, password=dbpassword, authSource=dbauth)[dbname]
+    def __init__(self, uri, dbuser, dbpassword, dbauth, dbname):
+        client = MongoClient(uri, username=dbuser, password=dbpassword, authSource=dbauth)
+        self.__db = client[dbname]
 
 
     def set(self, library_info):

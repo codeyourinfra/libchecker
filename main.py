@@ -13,7 +13,7 @@ class ServiceExit(Exception):
     pass
 
 
-def service_shutdown(signum, frame):
+def service_shutdown(signum):
     print('Caught signal %d' % signum)
     raise ServiceExit
 
