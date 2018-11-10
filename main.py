@@ -15,7 +15,7 @@ class ServiceExit(Exception):
 
 
 def service_shutdown(signum, frame):
-    logging.info('Caught signal %d' % signum)
+    logging.info("Caught signal %d", signum)
     raise ServiceExit
 
 
@@ -23,7 +23,8 @@ def main():
     signal.signal(signal.SIGTERM, service_shutdown)
     signal.signal(signal.SIGINT, service_shutdown)
 
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s: %(name)s - %(levelname)s - %(message)s")
+    logging.basicConfig(level=logging.INFO,
+                        format="%(asctime)s: %(name)s - %(levelname)s - %(message)s")
     logging.info("Starting main program")
     checker = LibraryChecker()
     try:
