@@ -1,9 +1,9 @@
 #!/usr/bin/python3.6
 
 import os
-import json
 from librariesio import LibraryInfoGetter
-from mongodb import LibraryInfoSetter
+from mongodb import LatestLibraryInfo
+from packaging import version
 
 
 class LibraryChecker():
@@ -37,7 +37,7 @@ class LibraryChecker():
         dbpassword = os.environ.get("MONGODB_PASSWORD")
         dbauth = os.environ.get("MONGODB_DBAUTH", "admin")
         dbname = os.environ.get("MONGODB_DBNAME", "libraries")
-        self.__setter = LibraryInfoSetter(uri, dbuser, dbpassword, dbauth, dbname)
+        self.__latest = LatestLibraryInfo(uri, dbuser, dbpassword, dbauth, dbname)
 
 
     def check(self):
@@ -48,6 +48,19 @@ class LibraryChecker():
         """
 
         _id = "%s_%s" % (self.__platform, self.__name)
-        info = json.loads(self.__getter.get())
-        library_info = {"_id": _id, "info": info}
-        self.__setter.set(library_info)
+        current_info = self.__getter.get()
+        latest_info = self.__latest.get(_id)
+        if self.__new_version_released(current_info, latest_info):
+            # TODO action execution
+            pass
+        if current_info:
+            library_info = {"_id": _id, "info": current_info}
+            self.__latest.set(library_info)
+
+
+    def __new_version_released(self, current_info, latest_info):
+        if not current_info or not latest_info:
+            return False
+        current_version = current_info["latest_release_number"]
+        latest_version = latest_info["info"]["latest_release_number"]
+        return version.parse(current_version) > version.parse(latest_version)

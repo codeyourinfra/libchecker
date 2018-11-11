@@ -1,6 +1,7 @@
 #!/usr/bin/python3.6
 
 import requests
+import json
 
 
 class LibraryInfoGetter():
@@ -11,9 +12,11 @@ class LibraryInfoGetter():
 
 
     def get(self):
+        library_info = None
         try:
             response = requests.get(self.__url)
-            library_info = response.content.decode("utf-8") if response.status_code == 200 else ""
+            if response.status_code == 200:
+                library_info = json.loads(response.content.decode("utf-8"))
         except requests.exceptions.ConnectionError:
-            library_info = ""
+            pass
         return library_info
