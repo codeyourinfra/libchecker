@@ -1,9 +1,9 @@
 #!/usr/bin/python3.6
 
 import os
+from packaging import version
 from librariesio import LibraryInfoGetter
 from mongodb import LatestLibraryInfo
-from packaging import version
 
 
 class LibraryChecker():

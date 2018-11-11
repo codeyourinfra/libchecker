@@ -1,7 +1,7 @@
 #!/usr/bin/python3.6
 
-import requests
 import json
+import requests
 
 
 class LibraryInfoGetter():
