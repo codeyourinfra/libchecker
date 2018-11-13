@@ -1,9 +1,48 @@
 #!/usr/bin/python3.6
 
+import json
 import os
 from packaging import version
 from librariesio import LibraryInfoGetter
 from mongodb import LatestLibraryInfo
+
+
+class LibraryCheckerConfig():
+    """
+    Class that holds the libchecker configuration
+    """
+
+
+    def __init__(self):
+        with open("config.json") as json_file:
+            self.__config = json.load(json_file)
+
+
+    def get_value(self, node, key, default=None):
+        value = node[key]
+        if value.startswith("env."):
+            value = os.environ.get(value.split(".")[1], default)
+        return value
+
+
+    def get_librariesio_api_key(self):
+        return self.get_value(self.__config, "librariesio_api_key")
+
+
+    def get_libraries_platform(self):
+        return self.get_value(self.__config, "libraries_platform")
+
+
+    def get_library_name(self):
+        return self.get_value(self.__config, "library_name")
+
+
+    def get_mongodb_config(self):
+        return self.__config["mongodb"]
+
+
+    def get_actions_config(self):
+        return self.__config["actions"]
 
 
 class LibraryChecker():
