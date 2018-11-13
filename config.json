@@ -1,0 +1,28 @@
+{
+    "librariesio_api_key": "env.LIBRARIESIO_API_KEY",
+    "libraries_platform": "pypi",
+    "library_name": "ansible",
+    "mongodb": {
+        "uri": "mongodb://mongo/",
+        "username": "dbuser",
+        "password": "dbpassword"
+    },
+    "actions": [{
+        "classname": "SlackWebhookPost",
+        "parameters": {
+            "slack_webhook_url": "env.SLACK_WEBHOOK_URL"
+        }
+    }, {
+        "classname": "TravisCIBuildTrigger",
+        "parameters": {
+            "travis_api_token": "env.TRAVIS_API_TOKEN",
+            "repo_api_endpoint": "https://api.travis-ci.com/repo/codeyourinfra%2Fdocker/requests"
+        }
+    }, {
+        "classname": "TravisCIBuildTrigger",
+        "parameters": {
+            "travis_api_token": "env.TRAVIS_API_TOKEN",
+            "repo_api_endpoint": "https://api.travis-ci.com/repo/codeyourinfra%2Foracle_java8/requests"
+        }
+    }]
+}
