@@ -1,6 +1,7 @@
 #!/usr/bin/python3.6
 
 import requests
+from config import Config
 
 
 class WebhookPost():
@@ -9,15 +10,15 @@ class WebhookPost():
     """
 
 
-    def __init__(self, webhook_url):
-        self.__webhook_url = webhook_url
+    def __init__(self, **parameters):
+        self.__webhook_url = Config.get_value(parameters, "webhook_url")
 
 
-    def execute(self, platform, library_name, latest_info, current_info):
+    def execute(self, platform, library_name, current_info, latest_info):
         payload = {"platform": platform,
                    "library_name": library_name,
-                   "latest_info": latest_info,
-                   "current_info": current_info}
+                   "current_info": current_info,
+                   "latest_info": latest_info}
         requests.post(self.__webhook_url, data=payload)
 
 
@@ -27,11 +28,11 @@ class SlackWebhookPost():
     """
 
 
-    def __init__(self, slack_webhook_url):
-        self.__slack_webhook_url = slack_webhook_url
+    def __init__(self, **parameters):
+        self.__slack_webhook_url = Config.get_value(parameters, "slack_webhook_url")
 
 
-    def execute(self, platform, library_name, latest_info, current_info):
+    def execute(self, platform, library_name, current_info, latest_info):
         message_text = "New *%s* version released in *%s*: *%s* !!!" % (library_name,
                                                                         platform,
                                                                         current_info["latest_release_number"])
@@ -45,12 +46,12 @@ class TravisCIBuildTrigger():
     """
 
 
-    def __init__(self, travis_api_token, repo_api_endpoint):
-        self.__travis_api_token = travis_api_token
-        self.__repo_api_endpoint = repo_api_endpoint
+    def __init__(self, **parameters):
+        self.__travis_api_token = Config.get_value(parameters, "travis_api_token")
+        self.__repo_api_endpoint = Config.get_value(parameters, "repo_api_endpoint")
 
 
-    def execute(self, platform, library_name, latest_info, current_info):
+    def execute(self, platform, library_name, current_info, latest_info):
         build_message = "New *%s* version released in *%s*: *%s* !!!" % (library_name,
                                                                          platform,
                                                                          current_info["latest_release_number"])
