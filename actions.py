@@ -38,6 +38,7 @@ class SlackWebhookPost():
         message = {"text": message_text}
         requests.post(self.__slack_webhook_url, data=message)
 
+
 class TravisCIBuildTrigger():
     """
     Class responsible for triggering a build in Travis CI.

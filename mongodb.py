@@ -17,6 +17,7 @@ class LatestLibraryInfo():
         client = MongoClient(uri, username=dbuser, password=dbpassword, authSource=dbauth)
         self.__collection = client[dbname]["latest"]
 
+
     def get(self, _id):
         try:
             return self.__collection.find_one(_id)
