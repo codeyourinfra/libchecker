@@ -9,14 +9,4 @@ COPY *.py ./
 RUN apk add --no-cache python3-dev musl-dev gcc && \
     pip3 install -r requirements.txt
 
-# Environment variables to be defined:
-# LIBRARIESIO_API_KEY
-# LIBRARIES_PLATFORM
-# LIBRARY_NAME
-# MONGODB_URI
-# MONGODB_USERNAME
-# MONGODB_PASSWORD
-# MONGODB_DBAUTH
-# MONGODB_DBNAME
-
 CMD ["python3", "./main.py"]

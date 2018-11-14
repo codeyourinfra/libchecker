@@ -1,82 +1,34 @@
 #!/usr/bin/python3.6
 
-import json
 import os
 from packaging import version
+from config import Config
 from librariesio import LibraryInfoGetter
 from mongodb import LatestLibraryInfo
-
-
-class LibraryCheckerConfig():
-    """
-    Class that holds the libchecker configuration
-    """
-
-
-    def __init__(self):
-        with open("config.json") as json_file:
-            self.__config = json.load(json_file)
-
-
-    def get_value(self, node, key, default=None):
-        value = node[key]
-        if value.startswith("env."):
-            value = os.environ.get(value.split(".")[1], default)
-        return value
-
-
-    def get_librariesio_api_key(self):
-        return self.get_value(self.__config, "librariesio_api_key")
-
-
-    def get_libraries_platform(self):
-        return self.get_value(self.__config, "libraries_platform")
-
-
-    def get_library_name(self):
-        return self.get_value(self.__config, "library_name")
-
-
-    def get_mongodb_config(self):
-        return self.__config["mongodb"]
-
-
-    def get_actions_config(self):
-        return self.__config["actions"]
 
 
 class LibraryChecker():
     """
     Class responsible for checking if a new
     version of some library was released in
-    order to take an specific action.
+    order to take one or more actions.
     """
 
 
     def __init__(self):
         """
-        The class requires the following environment variables:
-        LIBRARIESIO_API_KEY - the libraries.io API key
-        LIBRARIES_PLATFORM - the platform from where library data is extracted (ex: pypi)
-        LIBRARY_NAME - the name of the library
-        MONGODB_URI - the URI of a MongoDB instance where the latest library data is kept
-        MONGODB_USERNAME - the MongoDB username
-        MONGODB_PASSWORD - the password for connecting to MongoDB
-        MONGODB_DBAUTH - the database where the user can connect to (if root, admin)
-        MONGODB_DBNAME - the database where the latest library data is stored (default to libraries)
+        The class requires parameters defined in config.json
         """
 
-        api_key = os.environ.get("LIBRARIESIO_API_KEY")
-        self.__platform = os.environ.get("LIBRARIES_PLATFORM")
-        self.__name = os.environ.get("LIBRARY_NAME")
+        self.__config = Config()
+        self.__platform = self.__config.get_libraries_platform()
+        self.__name = self.__config.get_library_name()
+
+        api_key = self.__config.get_librariesio_api_key()
         self.__getter = LibraryInfoGetter(api_key, self.__platform, self.__name)
 
-        uri = os.environ.get("MONGODB_URI")
-        dbuser = os.environ.get("MONGODB_USERNAME")
-        dbpassword = os.environ.get("MONGODB_PASSWORD")
-        dbauth = os.environ.get("MONGODB_DBAUTH", "admin")
-        dbname = os.environ.get("MONGODB_DBNAME", "libraries")
-        self.__latest = LatestLibraryInfo(uri, dbuser, dbpassword, dbauth, dbname)
+        mongodb_config = self.__config.get_mongodb_config()
+        self.__latest = LatestLibraryInfo(**mongodb_config)
 
 
     def check(self):

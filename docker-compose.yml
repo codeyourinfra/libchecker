@@ -8,11 +8,8 @@ services:
     restart: always
     environment:
       - LIBRARIESIO_API_KEY
-      - LIBRARIES_PLATFORM=pypi
-      - LIBRARY_NAME=ansible
-      - MONGODB_URI=mongodb://mongo/
-      - MONGODB_USERNAME=dbuser
-      - MONGODB_PASSWORD=dbpassword
+    volumes:
+      - ./config.json:/libchecker/config.json
     depends_on:
       - mongo
 
