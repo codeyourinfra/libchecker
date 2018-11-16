@@ -56,7 +56,7 @@ class SlackWebhookPost():
             if response.status_code == 200:
                 self.__logger.info("Success on posting the message to Slack.")
             else:
-                self.__logger.warn("Failure on posting the message to Slack. Status code: %s.", response.status_code)
+                self.__logger.warn("Failure on posting the message to Slack. Status code: %s. Slack response: %s", response.status_code, response.text)
         except requests.exceptions.ConnectionError:
             self.__logger.exception("Error on posting the message to Slack. Stack trace:")
 
@@ -93,6 +93,6 @@ class TravisCIBuildTrigger():
             if response.status_code == 200:
                 self.__logger.info("Success on triggering the build in Travis CI.")
             else:
-                self.__logger.warn("Failure on triggering the build in Travis CI. Status code: %s.", response.status_code)
+                self.__logger.warn("Failure on triggering the build in Travis CI. Status code: %s. Travis CI response: %s", response.status_code, response.text)
         except requests.exceptions.ConnectionError:
             self.__logger.exception("Error on triggering the build in Travis CI. Stack trace:")
