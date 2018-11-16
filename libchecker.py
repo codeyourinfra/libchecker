@@ -61,7 +61,7 @@ class LibraryChecker():
 
 
     def __execute_action(self, action_config, current_info, latest_info):
-        action_class = locate("action.%s" % Config.get_value(action_config, "classname"))
+        action_class = locate("actions.%s" % Config.get_value(action_config, "classname"))
         parameters = action_config["parameters"]
         action_instance = action_class(**parameters)
         action_instance.execute(self.__platform, self.__name, current_info, latest_info["info"])
