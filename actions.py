@@ -81,6 +81,8 @@ class TravisCIBuildTrigger():
             "branch": "master"
         }}
         headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
             "Travis-API-Version": "3",
             "Authorization": "token %s" % self.__travis_api_token
         }
