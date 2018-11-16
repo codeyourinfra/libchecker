@@ -23,8 +23,6 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=dbuser
       - MONGO_INITDB_ROOT_PASSWORD=dbpassword
-    volumes:
-      - mongo_data:/data/db
 
   mongodb-ui:
     image: mongo-express
@@ -37,6 +35,3 @@ services:
       - 8081:8081
     depends_on:
       - mongo
-
-volumes:
-  mongo_data:
