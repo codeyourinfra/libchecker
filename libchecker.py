@@ -21,8 +21,6 @@ class LibraryChecker():
         The class requires parameters defined in config.json
         """
 
-        self.__logger = logging.getLogger("libchecker")
-
         self.__config = Config()
         self.__platform = self.__config.get_libraries_platform()
         self.__name = self.__config.get_library_name()
@@ -50,7 +48,7 @@ class LibraryChecker():
             for action_config in actions_config:
                 self.__execute_action(action_config, current_info, latest_info)
         else:
-            self.__logger.info("No version released yet.")
+            logging.info("No version released yet.")
 
         if current_info:
             library_info = {"_id": _id, "info": current_info}

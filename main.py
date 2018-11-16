@@ -6,14 +6,6 @@ import time
 from libchecker import LibraryChecker
 
 
-logger = logging.getLogger("libchecker")
-logger.setLevel(logging.INFO)
-handler = logging.StreamHandler()
-handler.setLevel(logging.INFO)
-handler.setFormatter(logging.Formatter("%(asctime)s: %(name)s - %(levelname)s - %(message)s"))
-logger.addHandler(handler)
-
-
 class ServiceExit(Exception):
     """
     Custom exception which is used to trigger the clean exit
@@ -23,7 +15,7 @@ class ServiceExit(Exception):
 
 
 def service_shutdown(signum, frame):
-    logger.info("Caught signal %d", signum)
+    logging.info("Caught signal %d", signum)
     raise ServiceExit
 
 
@@ -31,16 +23,18 @@ def main():
     signal.signal(signal.SIGTERM, service_shutdown)
     signal.signal(signal.SIGINT, service_shutdown)
 
-    logger.info("Starting main program")
+    logging.basicConfig(level=logging.INFO,
+                        format="%(asctime)s: %(name)s - %(levelname)s - %(message)s")
+    logging.info("Starting main program")
     checker = LibraryChecker()
     try:
         while True:
             checker.check()
-            logger.info("Sleeping 1m")
+            logging.info("Sleeping 1m")
             time.sleep(60)
     except ServiceExit:
         pass
-    logger.info("Exiting main program")
+    logging.info("Exiting main program")
 
 
 if __name__ == "__main__":
