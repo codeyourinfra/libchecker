@@ -18,6 +18,8 @@ It's a work in progress. Please contribute with the project adding more actions.
 - SlackWebhookPost - [Posts a message to a Slack incoming webhook](https://api.slack.com/incoming-webhooks)
 - TravisCIBuildTrigger - [Triggers a build in Travis CI](https://docs.travis-ci.com/user/triggering-builds)
 
+Each action is implemented by a Python class of the [actions](actions.py) module.
+
 ## Configuration
 
 **libchecker** requires a configuration file. Take a look at the content of [config.json](config.json):
@@ -56,3 +58,9 @@ It's a work in progress. Please contribute with the project adding more actions.
 In this example, **libchecker** is configured to check new releases of [Ansible](https://www.ansible.com) in [PyPI](https://pypi.org). The [Libraries.io API](http://libraries.io/api) requires a key, which is defined in the environment variable *LIBRARIESIO_API_KEY*.
 
 For sensitive data, you may prefer environment variables. If it's the case, start the value of the parameter with *env.*, and **libchecker** will get the configuration from the environment variable specified right after.
+
+Based on this configuration, **libchecker** will execute 3 actions, if a new version of [Ansible](https://www.ansible.com) is released in [PyPI](https://pypi.org):
+
+1. A message will be sent to a [Slack](https://slack.com) channel, through a POST request to a [Slack incoming webhook](https://api.slack.com/incoming-webhooks);
+2. A build will be triggered in [Travis CI](https://travis-ci.org), through a POST request to the [Travis CI API v3](https://docs.travis-ci.com/user/developer/#api-v3);
+3. Another build will be trigger in [Travis CI](https://travis-ci.org), the same way.
