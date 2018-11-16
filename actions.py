@@ -26,9 +26,12 @@ class WebhookPost():
             if response.status_code == 200:
                 logging.info("Success on posting the JSON payload to the webhook.")
             else:
-                logging.warn("Failure on posting the JSON payload to the webhook. Status code: %s.", response.status_code)
+                logging.warn("Failure on posting the JSON payload to the webhook. Status code: %s. Webhook response: %s", response.status_code, response.text)
+            result = response.text
         except requests.exceptions.ConnectionError:
             logging.exception("Error on posting the JSON payload to the webhook. Stack trace:")
+            result = None
+        return result
 
 
 class SlackWebhookPost():
@@ -52,8 +55,11 @@ class SlackWebhookPost():
                 logging.info("Success on posting the message to Slack.")
             else:
                 logging.warn("Failure on posting the message to Slack. Status code: %s. Slack response: %s", response.status_code, response.text)
+            result = response.text
         except requests.exceptions.ConnectionError:
             logging.exception("Error on posting the message to Slack. Stack trace:")
+            result = None
+        return result
 
 
 class TravisCIBuildTrigger():
@@ -87,5 +93,8 @@ class TravisCIBuildTrigger():
                 logging.info("Success on triggering the build in Travis CI.")
             else:
                 logging.warn("Failure on triggering the build in Travis CI. Status code: %s. Travis CI response: %s", response.status_code, response.text)
+            result = response.text
         except requests.exceptions.ConnectionError:
             logging.exception("Error on triggering the build in Travis CI. Stack trace:")
+            result = None
+        return result
