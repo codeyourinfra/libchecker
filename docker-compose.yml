@@ -8,13 +8,16 @@ services:
     restart: always
     environment:
       - LIBRARIESIO_API_KEY
+      - SLACK_WEBHOOK_URL
+      - TRAVIS_API_TOKEN
     volumes:
       - ./config.json:/libchecker/config.json
     depends_on:
       - mongo
 
   mongo:
-    image: mongo
+    image: codeyourinfra/libchecker-mongo
+    build: mongodb
     container_name: mongo
     restart: always
     environment:
