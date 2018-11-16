@@ -22,8 +22,9 @@ class WebhookPost():
                    "library_name": library_name,
                    "current_info": current_info,
                    "latest_info": latest_info}
+        headers = {"Content-Type": "application/json"}
         try:
-            response = requests.post(self.__webhook_url, data=payload)
+            response = requests.post(self.__webhook_url, data=payload, headers=headers)
             if response.status_code == 200:
                 self.__logger.info("Success on posting the JSON payload to the webhook.")
             else:
@@ -49,8 +50,9 @@ class SlackWebhookPost():
                                                                         platform,
                                                                         current_info["latest_release_number"])
         message = {"text": message_text}
+        headers = {"Content-Type": "application/json"}
         try:
-            response = requests.post(self.__slack_webhook_url, data=message)
+            response = requests.post(self.__slack_webhook_url, data=message, headers=headers)
             if response.status_code == 200:
                 self.__logger.info("Success on posting the message to Slack.")
             else:
