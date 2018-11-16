@@ -1,5 +1,6 @@
 #!/usr/bin/python3.6
 
+import json
 import logging
 import requests
 from config import Config
@@ -81,8 +82,8 @@ class TravisCIBuildTrigger():
             "Authorization": "token %s" % self.__travis_api_token
         }
         try:
-            response = requests.post(self.__repo_api_endpoint, data=body, headers=headers)
-            if response.status_code == 200:
+            response = requests.post(self.__repo_api_endpoint, data=json.dumps(body), headers=headers)
+            if response.status_code == 202:
                 logging.info("Success on triggering the build in Travis CI.")
             else:
                 logging.warn("Failure on triggering the build in Travis CI. Status code: %s. Travis CI response: %s", response.status_code, response.text)
