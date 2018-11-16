@@ -52,9 +52,9 @@ class TravisCIBuildTrigger():
 
 
     def execute(self, platform, library_name, current_info, latest_info):
-        build_message = "New *%s* version released in *%s*: *%s* !!!" % (library_name,
-                                                                         platform,
-                                                                         current_info["latest_release_number"])
+        build_message = "New %s version released in %s: %s !!!" % (library_name,
+                                                                   platform,
+                                                                   current_info["latest_release_number"])
         body = {"request": {
             "message": build_message,
             "branch": "master"
