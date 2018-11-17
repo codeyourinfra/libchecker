@@ -63,4 +63,10 @@ Based on this configuration, **libchecker** will execute 3 actions, if a new ver
 
 1. A message will be sent to a [Slack](https://slack.com) channel, through a POST request to a [Slack incoming webhook](https://api.slack.com/incoming-webhooks);
 2. A build will be triggered in [Travis CI](https://travis-ci.org), through a POST request to the [Travis CI API v3](https://docs.travis-ci.com/user/developer/#api-v3);
-3. Another build will be trigger in [Travis CI](https://travis-ci.org), the same way.
+3. Another build will be triggered in [Travis CI](https://travis-ci.org), the same way.
+
+## Slack workspace
+
+Join the **libchecker** workspace on Slack by clicking [here](https://join.slack.com/t/libchecker/shared_invite/enQtNDgxNTA1MDY4MDgwLThlZWVhNWExYjYxNGRkODY3YmFiNGRjNzhiMDE2ZDMyYzhjMWFlNDQ2NTJhNzFlNTNiMTQ5MjM1MzkxNmNjMmI). There we can talk more about the project.
+
+If you would like to be notified about your favorite library releases, feel free to request a channel with that purpose. The goal is keep everyone up to date when any library is released :)
