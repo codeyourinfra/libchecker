@@ -56,6 +56,10 @@ class LibraryChecker():
 
 
     def __new_version_released(self, current_info, latest_info):
+        """
+        Returns if the current version is greater than the latest.
+        """
+
         if not current_info or not latest_info:
             return False
         current_version = current_info["latest_release_number"]
@@ -64,6 +68,12 @@ class LibraryChecker():
 
 
     def __execute_action(self, action_config, current_info, latest_info):
+        """
+        Executes the pre-configured action.
+        The action class must be in the actions module
+        and must implement the method execute.
+        """
+
         action_classpath = "actions.%s" % Config.get_value(action_config, "classname")
         action_class = locate(action_classpath)
         parameters = action_config["parameters"]

@@ -13,10 +13,18 @@ class WebhookPost():
 
 
     def __init__(self, **parameters):
+        """
+        The class requires the webhook URL.
+        """
+
         self.__webhook_url = Config.get_value(parameters, "webhook_url")
 
 
     def execute(self, platform, library_name, current_info, latest_info):
+        """
+        Makes a POST request to the webhook.
+        """
+
         payload = {"platform": platform,
                    "library_name": library_name,
                    "current_info": current_info,
@@ -43,10 +51,18 @@ class SlackWebhookPost():
 
 
     def __init__(self, **parameters):
+        """
+        The class requires the Slack incoming webhook URL.
+        """
+
         self.__slack_webhook_url = Config.get_value(parameters, "slack_webhook_url")
 
 
     def execute(self, platform, library_name, current_info, latest_info):
+        """
+        Makes a POST request to the webhook.
+        """
+
         new_version = current_info["latest_release_number"]
         message_text = "New *%s* version released in *%s*: *%s* !!!" % (library_name,
                                                                         platform,
@@ -74,11 +90,19 @@ class TravisCIBuildTrigger():
 
 
     def __init__(self, **parameters):
+        """
+        The class requires the Travis API token and the repository API endpoint.
+        """
+
         self.__travis_api_token = Config.get_value(parameters, "travis_api_token")
         self.__repo_api_endpoint = Config.get_value(parameters, "repo_api_endpoint")
 
 
     def execute(self, platform, library_name, current_info, latest_info):
+        """
+        Makes a POST request to the endpoint.
+        """
+
         new_version = current_info["latest_release_number"]
         build_message = "New %s version released in %s: %s !!!" % (library_name,
                                                                    platform,
