@@ -26,7 +26,9 @@ class WebhookPost():
             if response.status_code == 200:
                 logging.info("Success on posting the JSON payload to the webhook.")
             else:
-                logging.warn("Failure on posting the JSON payload to the webhook. Status code: %s. Webhook response: %s", response.status_code, response.text)
+                logging.warning("Failure on posting the JSON payload to the webhook. "
+                                "Status code: %s. Webhook response: %s",
+                                response.status_code, response.text)
             result = response.text
         except requests.exceptions.ConnectionError:
             logging.exception("Error on posting the JSON payload to the webhook. Stack trace:")
@@ -45,16 +47,19 @@ class SlackWebhookPost():
 
 
     def execute(self, platform, library_name, current_info, latest_info):
+        new_version = current_info["latest_release_number"]
         message_text = "New *%s* version released in *%s*: *%s* !!!" % (library_name,
                                                                         platform,
-                                                                        current_info["latest_release_number"])
+                                                                        new_version)
         message = {"text": message_text}
         try:
             response = requests.post(self.__slack_webhook_url, json=message)
             if response.status_code == 200:
                 logging.info("Success on posting the message to Slack.")
             else:
-                logging.warn("Failure on posting the message to Slack. Status code: %s. Slack response: %s", response.status_code, response.text)
+                logging.warning("Failure on posting the message to Slack. "
+                                "Status code: %s. Slack response: %s",
+                                response.status_code, response.text)
             result = response.text
         except requests.exceptions.ConnectionError:
             logging.exception("Error on posting the message to Slack. Stack trace:")
@@ -74,9 +79,10 @@ class TravisCIBuildTrigger():
 
 
     def execute(self, platform, library_name, current_info, latest_info):
+        new_version = current_info["latest_release_number"]
         build_message = "New %s version released in %s: %s !!!" % (library_name,
                                                                    platform,
-                                                                   current_info["latest_release_number"])
+                                                                   new_version)
         body = {"request": {
             "message": build_message,
             "branch": "master"
@@ -88,11 +94,15 @@ class TravisCIBuildTrigger():
             "Authorization": "token %s" % self.__travis_api_token
         }
         try:
-            response = requests.post(self.__repo_api_endpoint, data=json.dumps(body), headers=headers)
+            response = requests.post(self.__repo_api_endpoint,
+                                     data=json.dumps(body),
+                                     headers=headers)
             if response.status_code == 202:
                 logging.info("Success on triggering the build in Travis CI.")
             else:
-                logging.warn("Failure on triggering the build in Travis CI. Status code: %s. Travis CI response: %s", response.status_code, response.text)
+                logging.warning("Failure on triggering the build in Travis CI. "
+                                "Status code: %s. Travis CI response: %s",
+                                response.status_code, response.text)
             result = response.text
         except requests.exceptions.ConnectionError:
             logging.exception("Error on triggering the build in Travis CI. Stack trace:")
