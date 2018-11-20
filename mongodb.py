@@ -1,5 +1,6 @@
 #!/usr/bin/python3.6
 
+import logging
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 from config import Config
@@ -31,9 +32,12 @@ class LatestLibraryInfo():
         """
 
         try:
-            return self.__collection.find_one(_id)
+            library_info = self.__collection.find_one(_id)
+            logging.info("Success on getting the latest library info.")
         except PyMongoError:
-            return None
+            logging.exception("Error on getting the latest library info. Stack trace:")
+            library_info = None
+        return library_info
 
 
     def set(self, library_info):
@@ -41,4 +45,8 @@ class LatestLibraryInfo():
         Stores the latest library info.
         """
 
-        self.__collection.replace_one({"_id": library_info["_id"]}, library_info, upsert=True)
+        try:
+            self.__collection.replace_one({"_id": library_info["_id"]}, library_info, upsert=True)
+            logging.info("Success on storing the latest library info.")
+        except PyMongoError:
+            logging.exception("Error on storing the latest library info. Stack trace:")

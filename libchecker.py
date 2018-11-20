@@ -24,6 +24,8 @@ class LibraryChecker():
         self.__config = Config()
         self.__platform = self.__config.get_libraries_platform()
         self.__name = self.__config.get_library_name()
+        logging.info("Library to be checked: %s. Platform: %s.",
+                     self.__name, self.__platform)
 
         api_key = self.__config.get_librariesio_api_key()
         self.__getter = LibraryInfoGetter(api_key, self.__platform, self.__name)
@@ -44,11 +46,14 @@ class LibraryChecker():
         latest_info = self.__latest.get(_id)
 
         if self.__new_version_released(current_info, latest_info):
+            logging.info("New version released: %s. Previous version: %s.",
+                         current_info["latest_release_number"],
+                         latest_info["info"]["latest_release_number"])
             actions_config = self.__config.get_actions_config()
             for action_config in actions_config:
                 self.__execute_action(action_config, current_info, latest_info)
         else:
-            logging.info("No version released yet.")
+            logging.info("No new version released yet.")
 
         if current_info:
             library_info = {"_id": _id, "info": current_info}

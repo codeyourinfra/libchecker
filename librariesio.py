@@ -1,6 +1,7 @@
 #!/usr/bin/python3.6
 
 import json
+import logging
 import requests
 
 
@@ -28,6 +29,11 @@ class LibraryInfoGetter():
             response = requests.get(self.__url)
             if response.status_code == 200:
                 library_info = json.loads(response.content.decode("utf-8"))
+                logging.info("Success on getting the current library info.")
+            else:
+                logging.warning("Failure on getting the current library info. "
+                                "Status code: %s. Webhook response: %s",
+                                response.status_code, response.text)
         except requests.exceptions.ConnectionError:
-            pass
+            logging.exception("Error on getting the current library info. Stack trace:")
         return library_info
