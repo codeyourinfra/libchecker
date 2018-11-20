@@ -32,7 +32,7 @@ class LibraryInfoGetter():
                 logging.info("Success on getting the current library info.")
             else:
                 logging.warning("Failure on getting the current library info. "
-                                "Status code: %s. Webhook response: %s",
+                                "Status code: %s. Libraries.io API response: %s",
                                 response.status_code, response.text)
         except requests.exceptions.ConnectionError:
             logging.exception("Error on getting the current library info. Stack trace:")
