@@ -3,6 +3,7 @@
 import logging
 import signal
 import time
+from config import Config
 from libchecker import LibraryChecker
 
 
@@ -35,7 +36,8 @@ def main():
     logging.basicConfig(level=logging.INFO,
                         format="%(asctime)s: %(name)s - %(levelname)s - %(message)s")
     logging.info("Starting main program")
-    checker = LibraryChecker()
+    config = Config()
+    checker = LibraryChecker(config.get_config())
     try:
         while True:
             checker.check()

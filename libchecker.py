@@ -16,21 +16,21 @@ class LibraryChecker():
     """
 
 
-    def __init__(self):
+    def __init__(self, config):
         """
         The class requires parameters defined in config.json
         """
 
-        self.__config = Config()
-        self.__platform = self.__config.get_libraries_platform()
-        self.__name = self.__config.get_library_name()
+        self.__config = config
+        self.__platform = Config.get_value(self.__config, "libraries_platform")
+        self.__name = Config.get_value(self.__config, "library_name")
         logging.info("Library to be checked: %s. Platform: %s.",
                      self.__name, self.__platform)
 
-        api_key = self.__config.get_librariesio_api_key()
+        api_key = Config.get_value(self.__config, "librariesio_api_key")
         self.__getter = LibraryInfoGetter(api_key, self.__platform, self.__name)
 
-        mongodb_config = self.__config.get_mongodb_config()
+        mongodb_config = self.__config.get("mongodb", None)
         self.__latest = LatestLibraryInfo(**mongodb_config)
 
 
@@ -49,7 +49,7 @@ class LibraryChecker():
             logging.info("New version released: %s. Previous version: %s.",
                          current_info["latest_release_number"],
                          latest_info["info"]["latest_release_number"])
-            actions_config = self.__config.get_actions_config()
+            actions_config = self.__config.get("actions", None)
             for action_config in actions_config:
                 self.__execute_action(action_config, current_info, latest_info)
         else:
