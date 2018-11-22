@@ -10,13 +10,13 @@ class Config():
     """
 
 
-    def __init__(self):
+    def __init__(self, json_file="config.json"):
         """
         The class requires the file config.json.
         """
 
-        with open("config.json") as json_file:
-            self.__config = json.load(json_file)
+        with open(json_file) as json_content:
+            self.__config = json.load(json_content)
 
 
     @staticmethod
