@@ -33,41 +33,41 @@ class Config():
         return value
 
 
-    def get_librariesio_api_key(self):
+    def get_librariesio_api_key(self, index=0):
         """
         Returns the Libraries.io API key.
         """
 
-        return Config.get_value(self.__config, "librariesio_api_key")
+        return Config.get_value(self.__config[index], "librariesio_api_key")
 
 
-    def get_libraries_platform(self):
+    def get_libraries_platform(self, index=0):
         """
         Returns the libraries platform.
         """
 
-        return Config.get_value(self.__config, "libraries_platform")
+        return Config.get_value(self.__config[index], "libraries_platform")
 
 
-    def get_library_name(self):
+    def get_library_name(self, index=0):
         """
         Returns the library name.
         """
 
-        return Config.get_value(self.__config, "library_name")
+        return Config.get_value(self.__config[index], "library_name")
 
 
-    def get_mongodb_config(self):
+    def get_mongodb_config(self, index=0):
         """
         Returns the MongoDB configuration.
         """
 
-        return self.__config["mongodb"]
+        return self.__config[index].get("mongodb", None)
 
 
-    def get_actions_config(self):
+    def get_actions_config(self, index=0):
         """
         Returns the actions to be executed.
         """
 
-        return self.__config["actions"]
+        return self.__config[index].get("actions", None)
