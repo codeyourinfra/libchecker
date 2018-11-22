@@ -6,7 +6,7 @@ Checks the update of a library's version and executes some actions if so.
 
 ## How it works
 
-![How it works](http://codeyourinfra.today/wp-content/uploads/2018/11/libchecker.png)
+![How it works](http://codeyourinfra.today/wp-content/uploads/2018/11/libchecker-1.png)
 
 **libchecker** gets the current library data from the [Libraries.io API](http://libraries.io/api) every minute. Then, compares the current version with the latest one, previously stored in a [MongoDB](https://www.mongodb.com) instance. If a new version of the library have just released, **libchecker** automaticaly execute one or more configured actions.
 
@@ -17,6 +17,8 @@ It's a work in progress. Please contribute with the project adding more actions.
 - WebhookPost - Posts a JSON payload to a [webhook](https://en.wikipedia.org/wiki/Webhook)
 - SlackWebhookPost - [Posts a message to a Slack incoming webhook](https://api.slack.com/incoming-webhooks)
 - TravisCIBuildTrigger - [Triggers a build in Travis CI](https://docs.travis-ci.com/user/triggering-builds)
+- GithubIssueCreate - [Creates an issue in a GitHub repository](https://developer.github.com/v3/issues/#create-an-issue)
+- EmailSend - Sends an email to one or more recipients
 
 Each action is implemented by a Python class of the [actions](actions.py) module.
 
