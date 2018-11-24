@@ -12,11 +12,19 @@ class Config():
 
     def __init__(self, json_file="config.json"):
         """
-        The class requires the file config.json.
+        The class requires the configuration file (default: config.json).
         """
 
         with open(json_file) as json_content:
             self.__config = json.load(json_content)
+
+
+    def get_configs(self):
+        """
+        Returns all the libchecker configurations.
+        """
+
+        return self.__config
 
 
     def get_config(self, index=0):
@@ -29,7 +37,7 @@ class Config():
 
     def len(self):
         """
-        Returns how many configurations are.
+        Returns how many configurations exist.
         """
 
         return len(self.__config)

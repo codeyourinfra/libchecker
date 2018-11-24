@@ -1,7 +1,9 @@
 #!/usr/bin/python3.6
 
 import logging
+import time
 from pydoc import locate
+from threading import Thread, Event
 from packaging import version
 from config import Config
 from librariesio import LibraryInfoGetter
@@ -18,7 +20,7 @@ class LibraryChecker():
 
     def __init__(self, config):
         """
-        The class requires parameters defined in config.json
+        The class requires parameters defined in the configuration file.
         """
 
         self.__config = config
@@ -41,7 +43,7 @@ class LibraryChecker():
         Always store the latest version data into MongoDB.
         """
 
-        _id = "%s_%s" % (self.__platform, self.__name)
+        _id = self.get_id()
         current_info = self.__getter.get()
         latest_info = self.__latest.get(_id)
 
@@ -58,6 +60,14 @@ class LibraryChecker():
         if current_info:
             library_info = {"_id": _id, "info": current_info}
             self.__latest.set(library_info)
+
+
+    def get_id(self):
+        """
+        Returns the libchecker id.
+        """
+
+        return "%s_%s" % (self.__platform, self.__name)
 
 
     def __new_version_released(self, current_info, latest_info):
@@ -85,3 +95,40 @@ class LibraryChecker():
         action_instance = action_class(**parameters)
         logging.info("%s about to be executed...", action_classpath)
         action_instance.execute(self.__platform, self.__name, current_info, latest_info["info"])
+
+
+class LibraryCheckerThread(Thread):
+    """
+    Thread responsible for checking the release of a library every minute.
+    """
+
+
+    def __init__(self, config):
+        """
+        The thread's name is the libchecker's id.
+        """
+
+        super().__init__()
+        self.__stopped = Event()
+        self.__checker = LibraryChecker(config)
+        self.name = self.__checker.get_id()
+
+
+    def stop(self):
+        """
+        Stops the thread.
+        """
+
+        self.__stopped.set()
+        self.join()
+
+
+    def run(self):
+        """
+        Checks every minute if a release was made.
+        """
+
+        while not self.__stopped.is_set():
+            self.__checker.check()
+            logging.info("Sleeping 1m")
+            time.sleep(60)

@@ -4,7 +4,38 @@ import logging
 import signal
 import time
 from config import Config
-from libchecker import LibraryChecker
+from libchecker import LibraryCheckerThread
+
+
+class ReleaseMonitor():
+    """
+    Class responsible for controlling the libchecker threads lifecycle.
+    """
+
+
+    def __init__(self):
+        self.__config = Config()
+        self.__threads = []
+        for config in self.__config.get_configs():
+            self.__threads.append(LibraryCheckerThread(config))
+
+
+    def start(self):
+        """
+        Starts all libchecker threads.
+        """
+
+        for thread in self.__threads:
+            thread.start()
+
+
+    def stop(self):
+        """
+        Stops all libchecker threads.
+        """
+
+        for thread in self.__threads:
+            thread.stop()
 
 
 class ServiceExit(Exception):
@@ -36,15 +67,13 @@ def main():
     logging.basicConfig(level=logging.INFO,
                         format="%(asctime)s: %(name)s - %(levelname)s - %(message)s")
     logging.info("Starting main program")
-    config = Config()
-    checker = LibraryChecker(config.get_config())
+    monitor = ReleaseMonitor()
     try:
+        monitor.start()
         while True:
-            checker.check()
-            logging.info("Sleeping 1m")
-            time.sleep(60)
+            time.sleep(0.5)
     except ServiceExit:
-        pass
+        monitor.stop()
     logging.info("Exiting main program")
 
 
