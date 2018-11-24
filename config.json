@@ -44,13 +44,13 @@
             {
                 "classname": "EmailSend",
                 "parameters": {
-                    "smtp_host": "my_smtp_host",
+                    "smtp_host": "env.SMTP_HOST",
                     "smtp_port": 587,
                     "smtp_username": "env.SMTP_USERNAME",
                     "smtp_password": "env.SMTP_PASSWORD",
-                    "sender": "sender@example.com",
+                    "sender": "gustavo@codeyourinfra.today",
                     "receivers": [
-                        "receiver1@example.com"
+                        "gustavo@esign.com.br"
                     ]
                 }
             },
