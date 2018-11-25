@@ -65,7 +65,7 @@ def main():
     signal.signal(signal.SIGINT, service_shutdown)
 
     logging.basicConfig(level=logging.INFO,
-                        format="%(asctime)s: %(name)s - %(levelname)s - %(message)s")
+                        format="%(asctime)s: %(threadName)s - %(levelname)s - %(message)s")
     logging.info("Starting main program")
     monitor = ReleaseMonitor()
     try:
