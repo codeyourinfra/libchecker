@@ -3,6 +3,8 @@
 import json
 import logging
 import requests
+import smtplib
+from email.message import EmailMessage
 from config import Config
 
 
@@ -132,3 +134,43 @@ class TravisCIBuildTrigger():
             logging.exception("Error on triggering the build in Travis CI. Stack trace:")
             result = None
         return result
+
+
+class EmailSend():
+    """
+    Class responsible for sending an email.
+    """
+
+
+    def __init__(self, **parameters):
+        """
+        The class requires SMTP credential settings.
+        """
+
+        self.__smtp_host = Config.get_value(parameters, "smtp_host")
+        self.__smtp_port = Config.get_value(parameters, "smtp_port")
+        self.__smtp_username = Config.get_value(parameters, "smtp_username")
+        self.__smtp_password = Config.get_value(parameters, "smtp_password")
+        self.__sender = Config.get_value(parameters, "sender")
+        self.__receivers = parameters.get("receivers", None)
+
+
+    def execute(self, platform, library_name, current_info, latest_info):
+        """
+        Sends the email.
+        """
+
+        new_version = current_info["latest_release_number"]
+        message = "New %s version released in %s: %s !!!" % (library_name,
+                                                             platform,
+                                                             new_version)
+        msg = EmailMessage()
+        msg["Subject"] = "libchecker release monitor notification"
+        msg["From"] = self.__sender
+        msg["To"] = self.__receivers
+        msg.set_content(message)
+
+        server = smtplib.SMTP_SSL(self.__smtp_host, self.__smtp_port)
+        server.login(self.__smtp_username, self.__smtp_password)
+        server.send_message(msg)
+        server.quit()

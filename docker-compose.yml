@@ -10,6 +10,9 @@ services:
       - LIBRARIESIO_API_KEY
       - SLACK_WEBHOOK_URL
       - TRAVIS_API_TOKEN
+      - SMTP_HOST
+      - SMTP_USERNAME
+      - SMTP_PASSWORD
     volumes:
       - ./config.json:/libchecker/config.json
     depends_on:
