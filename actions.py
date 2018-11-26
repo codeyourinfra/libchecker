@@ -4,6 +4,7 @@ import json
 import logging
 import requests
 import smtplib
+import ssl
 from email.message import EmailMessage
 from config import Config
 
@@ -170,7 +171,8 @@ class EmailSend():
         msg["To"] = self.__receivers
         msg.set_content(message)
 
-        server = smtplib.SMTP_SSL(self.__smtp_host, self.__smtp_port)
+        server = smtplib.SMTP(self.__smtp_host, self.__smtp_port)
+        server.starttls(context=ssl.SSLContext(ssl.PROTOCOL_SSLv23))
         server.login(self.__smtp_username, self.__smtp_password)
         server.send_message(msg)
         server.quit()
