@@ -52,6 +52,6 @@ class Config():
         """
 
         value = node.get(key, default)
-        if value and value.startswith("env."):
+        if value and isinstance(value, str) and value.startswith("env."):
             value = os.environ.get(value.split(".")[1], default)
         return value
