@@ -55,7 +55,7 @@ Each action is implemented by a Python class of the [actions](actions.py) module
                 "classname": "TravisCIBuildTrigger",
                 "parameters": {
                     "travis_api_token": "env.TRAVIS_API_TOKEN",
-                    "repo_api_endpoint": "https://api.travis-ci.org/repo/codeyourinfra%2Foracle_java8/requests"
+                    "repo_api_endpoint": "https://api.travis-ci.org/repo/codeyourinfra%2Fjava8/requests"
                 }
             }
         ]
@@ -63,7 +63,7 @@ Each action is implemented by a Python class of the [actions](actions.py) module
     {
         "librariesio_api_key": "env.LIBRARIESIO_API_KEY",
         "libraries_platform": "maven",
-        "library_name": "jackson-core",
+        "library_name": "com.fasterxml.jackson.core:jackson-core",
         "mongodb": {
             "uri": "mongodb://mongo/",
             "username": "dbuser",
@@ -108,6 +108,6 @@ Based on this configuration, **libchecker** will execute 3 actions, if a new ver
 
 ## Slack workspace
 
-Join the **libchecker** workspace on Slack by clicking [here](https://join.slack.com/t/libchecker/shared_invite/enQtNDgxNTA1MDY4MDgwLThlZWVhNWExYjYxNGRkODY3YmFiNGRjNzhiMDE2ZDMyYzhjMWFlNDQ2NTJhNzFlNTNiMTQ5MjM1MzkxNmNjMmI). There we can talk more about the project.
+Join the **libchecker** workspace on Slack by clicking [here](https://join.slack.com/t/libchecker/shared_invite/enQtNDgxNTA1MDY4MDgwLWM0OWIxYTVhOTY5YWQ5YjdhMzY1MmRjMzlkZTQ4OGMzY2UyZDVjZTMzMDJkNzg3M2RiYjBjYTA3ZTk5YjI4YWM). There we can talk more about the project.
 
 If you would like to be notified about your favorite library releases, feel free to request a channel with that purpose. The goal is keep everyone up to date when any library is released :)

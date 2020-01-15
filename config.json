@@ -26,7 +26,7 @@
                 "classname": "TravisCIBuildTrigger",
                 "parameters": {
                     "travis_api_token": "env.TRAVIS_API_TOKEN",
-                    "repo_api_endpoint": "https://api.travis-ci.org/repo/codeyourinfra%2Foracle_java8/requests"
+                    "repo_api_endpoint": "https://api.travis-ci.org/repo/codeyourinfra%2Fjava8/requests"
                 }
             }
         ]
@@ -34,7 +34,7 @@
     {
         "librariesio_api_key": "env.LIBRARIESIO_API_KEY",
         "libraries_platform": "maven",
-        "library_name": "jackson-core",
+        "library_name": "com.fasterxml.jackson.core:jackson-core",
         "mongodb": {
             "uri": "mongodb://mongo/",
             "username": "dbuser",
