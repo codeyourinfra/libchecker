@@ -1,6 +1,7 @@
 #!/usr/bin/python3.6
 
-import json
+from dotenv import load_dotenv
+import yaml
 import os
 
 
@@ -10,13 +11,14 @@ class Config():
     """
 
 
-    def __init__(self, json_file="config.json"):
+    def __init__(self, yaml_file="config.yaml"):
         """
-        The class requires the configuration file (default: config.json).
+        The class requires the configuration file (default: config.yaml).
         """
 
-        with open(json_file) as json_content:
-            self.__config = json.load(json_content)
+        load_dotenv()
+        with open(yaml_file) as yaml_content:
+            self.__config = yaml.full_load(yaml_content)
 
 
     def get_configs(self):

@@ -8,13 +8,16 @@ services:
     restart: always
     environment:
       - LIBRARIESIO_API_KEY
+      - MONGO_URI=mongodb://mongo/
+      - MONGO_USERNAME=dbuser
+      - MONGO_PASSWORD=dbpassword
       - SLACK_WEBHOOK_URL
       - TRAVIS_API_TOKEN
       - SMTP_HOST
       - SMTP_USERNAME
       - SMTP_PASSWORD
     volumes:
-      - ./config.json:/libchecker/config.json
+      - ./config.yaml:/libchecker/config.yaml
     depends_on:
       - mongo
 

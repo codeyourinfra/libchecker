@@ -24,76 +24,52 @@ Each action is implemented by a Python class of the [actions](actions.py) module
 
 ## Configuration
 
-**libchecker** requires a configuration file. Take a look at the content of [config.json](config.json):
+**libchecker** requires a configuration file. Take a look at the content of [config.yaml](config.yaml):
 
-```json
-[
-    {
-        "librariesio_api_key": "env.LIBRARIESIO_API_KEY",
-        "libraries_platform": "pypi",
-        "library_name": "ansible",
-        "mongodb": {
-            "uri": "mongodb://mongo/",
-            "username": "dbuser",
-            "password": "dbpassword"
-        },
-        "actions": [
-            {
-                "classname": "SlackWebhookPost",
-                "parameters": {
-                    "slack_webhook_url": "env.SLACK_WEBHOOK_URL"
-                }
-            },
-            {
-                "classname": "TravisCIBuildTrigger",
-                "parameters": {
-                    "travis_api_token": "env.TRAVIS_API_TOKEN",
-                    "repo_api_endpoint": "https://api.travis-ci.org/repo/codeyourinfra%2Fdocker/requests"
-                }
-            },
-            {
-                "classname": "TravisCIBuildTrigger",
-                "parameters": {
-                    "travis_api_token": "env.TRAVIS_API_TOKEN",
-                    "repo_api_endpoint": "https://api.travis-ci.org/repo/codeyourinfra%2Fjava8/requests"
-                }
-            }
-        ]
-    },
-    {
-        "librariesio_api_key": "env.LIBRARIESIO_API_KEY",
-        "libraries_platform": "maven",
-        "library_name": "com.fasterxml.jackson.core:jackson-core",
-        "mongodb": {
-            "uri": "mongodb://mongo/",
-            "username": "dbuser",
-            "password": "dbpassword"
-        },
-        "actions": [
-            {
-                "classname": "EmailSend",
-                "parameters": {
-                    "smtp_host": "env.SMTP_HOST",
-                    "smtp_port": 587,
-                    "smtp_username": "env.SMTP_USERNAME",
-                    "smtp_password": "env.SMTP_PASSWORD",
-                    "sender": "gustavo@codeyourinfra.today",
-                    "receivers": [
-                        "gustavo@esign.com.br"
-                    ]
-                }
-            },
-            {
-                "classname": "GithubIssueCreate",
-                "parameters": {
-                    "github_api_token": "env.GITHUB_API_TOKEN",
-                    "username": "esign-consulting",
-                    "reponame": "google-geocode"
-                }
-            }
-        ]
-    }
-]
+```yaml
+---
+- librariesio_api_key: env.LIBRARIESIO_API_KEY
+  libraries_platform: pypi
+  library_name: ansible
+  mongodb:
+    uri: env.MONGO_URI
+    username: env.MONGO_USERNAME
+    password: env.MONGO_PASSWORD
+  actions:
+    - classname: SlackWebhookPost
+      parameters:
+        slack_webhook_url: env.SLACK_WEBHOOK_URL
+    - classname: TravisCIBuildTrigger
+      parameters:
+        travis_api_token: env.TRAVIS_API_TOKEN
+        repo_api_endpoint: https://api.travis-ci.org/repo/codeyourinfra%2Fdocker/requests
+    - classname: TravisCIBuildTrigger
+      parameters:
+        travis_api_token: env.TRAVIS_API_TOKEN
+        repo_api_endpoint: https://api.travis-ci.org/repo/codeyourinfra%2Fjava8/requests
+
+- librariesio_api_key: env.LIBRARIESIO_API_KEY
+  libraries_platform: maven
+  library_name: com.fasterxml.jackson.core:jackson-core
+  mongodb:
+    uri: env.MONGO_URI
+    username: env.MONGO_USERNAME
+    password: env.MONGO_PASSWORD
+  actions:
+    - classname: EmailSend
+      parameters:
+        smtp_host: env.SMTP_HOST
+        smtp_port: 587
+        smtp_username: env.SMTP_USERNAME
+        smtp_password: env.SMTP_PASSWORD
+        sender: gustavo@codeyourinfra.today
+        receivers:
+          - gustavo@esign.com.br
+    - classname: GithubIssueCreate
+      parameters:
+        github_api_token: env.GITHUB_API_TOKEN
+        username: esign-consulting
+        reponame: google-geocode
 ```
 
 In this example, **libchecker** is configured to check new releases of [Ansible](https://www.ansible.com) in [PyPI](https://pypi.org). The [Libraries.io API](http://libraries.io/api) requires a key, which is defined in the environment variable *LIBRARIESIO_API_KEY*.
