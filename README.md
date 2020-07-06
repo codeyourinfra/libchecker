@@ -1,6 +1,6 @@
 # libchecker
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Docker Build status](https://img.shields.io/docker/build/codeyourinfra/libchecker.svg)](https://hub.docker.com/r/codeyourinfra/libchecker/builds) [![Docker Pulls](https://img.shields.io/docker/pulls/codeyourinfra/libchecker.svg)](https://hub.docker.com/r/codeyourinfra/libchecker)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Known Vulnerabilities](https://snyk.io/test/github/codeyourinfra/libchecker/badge.svg)](https://snyk.io/test/github/codeyourinfra/libchecker) [![Docker Build status](https://img.shields.io/docker/build/codeyourinfra/libchecker.svg)](https://hub.docker.com/r/codeyourinfra/libchecker/builds) [![Docker Pulls](https://img.shields.io/docker/pulls/codeyourinfra/libchecker.svg)](https://hub.docker.com/r/codeyourinfra/libchecker)
 
 Checks the update of a library's version and executes some actions if so.
 
