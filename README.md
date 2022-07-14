@@ -1,12 +1,12 @@
 # libchecker
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Known Vulnerabilities](https://snyk.io/test/github/codeyourinfra/libchecker/badge.svg)](https://snyk.io/test/github/codeyourinfra/libchecker) [![Docker Build status](https://img.shields.io/docker/build/codeyourinfra/libchecker.svg)](https://hub.docker.com/r/codeyourinfra/libchecker/builds) [![Docker Pulls](https://img.shields.io/docker/pulls/codeyourinfra/libchecker.svg)](https://hub.docker.com/r/codeyourinfra/libchecker)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Known Vulnerabilities](https://snyk.io/test/github/codeyourinfra/libchecker/badge.svg)](https://snyk.io/test/github/codeyourinfra/libchecker) [![Docker Build status](https://img.shields.io/docker/cloud/build/codeyourinfra/libchecker.svg)](https://hub.docker.com/r/codeyourinfra/libchecker/builds) [![Docker Pulls](https://img.shields.io/docker/pulls/codeyourinfra/libchecker.svg)](https://hub.docker.com/r/codeyourinfra/libchecker)
 
 Checks the update of a library's version and executes some actions if so.
 
 ## How it works
 
-![How it works](http://codeyourinfra.today/wp-content/uploads/2018/11/libchecker-1.png)
+![How it works](libchecker-1.png)
 
 **libchecker** gets the current library data from the [Libraries.io API](http://libraries.io/api) every minute. Then, compares the current version with the latest one, previously stored in a [MongoDB](https://www.mongodb.com) instance. If a new version of the library have just released, **libchecker** automaticaly execute one or more configured actions.
 
